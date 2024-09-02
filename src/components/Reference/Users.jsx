@@ -22,7 +22,7 @@ const Users = () => {
   return (
     <div>
       {data?.data?.map((user) => (
-        <div key={user.id}>
+        <div >
           <h2>
             {user?.first_name} {user.last_name}
           </h2>

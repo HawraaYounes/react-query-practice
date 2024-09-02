@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
 const fetchUser = async ({ queryKey }) => {
-  const [_, userId] = queryKey;
+  const [_, {userId}] = queryKey;
   const response = await fetch(`https://reqres.in/api/users/${userId}`);
   return response.json();
 };
@@ -10,7 +10,7 @@ const fetchUser = async ({ queryKey }) => {
 const User = () => {
   const userId = 1;
   const { isLoading, isError, error, data } = useQuery({
-    queryKey: ["users", userId],
+    queryKey: ["users", {userId}],
     queryFn: fetchUser,
   });
   console.log("USER DATA", data);

@@ -7,13 +7,31 @@ const fetchUsers = async () => {
 };
 
 const Users = () => {
-  const usersQuery = useQuery({
-    queryKey: [""],
+  const { isLoading, isError, error, data } = useQuery({
+    queryKey: ["users"],
     queryFn: fetchUsers,
   });
-  console.log("USERS QUERY",usersQuery);
+  console.log("USERS DATA", data);
 
-  return <div>Users</div>;
+  if (isLoading) {
+    return <h1> Loading ...</h1>;
+  }
+  if (isError) {
+    return <h1> Something wrong occured! {error.message}</h1>;
+  }
+  return (
+    <div>
+      {data?.data?.map((user) => (
+        <div key={user.id}>
+          <h2>
+            {user?.first_name} {user.last_name}
+          </h2>
+          <p>{user?.email}</p>
+          <img src={user?.avatar} alt="user-img" />
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default Users;

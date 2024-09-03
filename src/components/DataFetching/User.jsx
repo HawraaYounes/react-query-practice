@@ -1,13 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const fetchUser = async ({ queryKey }) => {
   const [_, { userId }] = queryKey;
-  const response = await fetch(`https://reqres.in/api/users/${userId}`);
-  if(!response.ok){
-    throw new Error('User not found!')
-  }
-  return response.json();
+  const response = await axios(`https://reqres.in/api/users/${userId}`);
+  return response.data;
 };
 
 const User = () => {

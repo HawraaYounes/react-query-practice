@@ -1,10 +1,10 @@
-import User from "./components/DataFetching/User";
+import Posts from "./components/DataFetching/Posts";
 
 function App() {
   return (
     <>
       <h1>Data Fetching!</h1>
-      <User/>
+      <Posts/>
     </>
   );
 }

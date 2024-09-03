@@ -9,10 +9,11 @@ const fetchUser = async ({ queryKey }) => {
 };
 
 const User = () => {
-  const userId = 1;
+  const userId = 2;
   const { isLoading, isError, error, data } = useQuery({
     queryKey: ["users", { userId }],
     queryFn: fetchUser,
+    staleTime: 5000,
   });
   console.log(isLoading, isError, error, data);
 

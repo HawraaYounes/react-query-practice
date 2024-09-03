@@ -2,40 +2,69 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const fetchUser = async ({ queryKey }) => {
-  const [_, { userId }] = queryKey;
-  const response = await axios(`https://reqres.in/api/users/${userId}`);
-  return response.data;
+const fetchUsers = async () => {
+  try {
+    const response = await axios(`https://reqres.in/api/users`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const fetchUnknown = async () => {
+  try {
+    const response = await axios(`https://reqres.in/api/unknown`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
 const User = () => {
-  const userId = 6;
-  const { isLoading, isError, error, data } = useQuery({
-    queryKey: ["users", { userId }],
-    queryFn: fetchUser,
-    staleTime: 5000,
-    cacheTime: 5000,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-    retry: 2,
-    retryDelay: 3000,
-    refetchInterval: 9000,
+  const users = useQuery({
+    queryKey: ["users"],
+    queryFn: fetchUsers,
+  });
+  const unknownUser = useQuery({
+    queryKey: ["unknown"],
+    queryFn: fetchUnknown,
   });
 
-  if (isLoading) {
-    return <h1> Loading ...</h1>;
+  if (users.isLoading || unknownUser.isLoading) {
+    return <h1>Loading ...</h1>;
   }
-  if (isError) {
-    return <h1>{error.message}</h1>;
+  if (users.error || unknownUser.error) {
+    return <h1>Something went wrong!</h1>;
   }
+
   return (
     <div>
-      <h2>
-        {data.data?.first_name} {data?.data?.last_name}
-      </h2>
-      <p>{data?.data?.email}</p>
-      <img src={data?.data?.avatar} alt="user-img" />
+      <h1>Parallel Queries</h1>
+      <h2>Users List</h2>
+      {/* users  */}
+      {users?.data?.data?.map((user) => {
+        return (
+          <div>
+            <h3>
+              {user.first_name} {user.last_name}
+            </h3>
+            <p>Email: {user.email}</p>
+            <img src={user.avatar} />
+          </div>
+        );
+      })}
+      {/* unknown user  */}
+      {users?.data?.data?.map((user) => {
+        return (
+          <div>
+            <h3>
+              {user.first_name} {user.last_name}
+            </h3>
+            <p>Unknown User Email: {user.email}</p>
+            <img src={user.avatar} />
+          </div>
+        );
+      })}
     </div>
   );
 };

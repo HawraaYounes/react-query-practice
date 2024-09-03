@@ -15,6 +15,8 @@ const User = () => {
     queryFn: fetchUser,
     staleTime: 5000,
     cacheTime: 5000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 
   if (isLoading) {

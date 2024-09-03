@@ -17,6 +17,7 @@ const User = () => {
     cacheTime: 5000,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
   if (isLoading) {

@@ -25,7 +25,12 @@ function CreatePost() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    createPostMutation.mutate({ title, body });
+    try {
+      const result = await createPostMutation.mutateAsync({ title, body });
+      console.log({ result });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

@@ -29,11 +29,19 @@ const Posts = () => {
     queryFn: fetchPosts,
   });
 
-  console.log({ data, isError, isLoading });
-
+  if (isLoading) {
+    return <h1>Loading ...</h1>;
+  }
+  if (isError) {
+    return <h1>Something went wrong!</h1>;
+  }
   return (
     <div>
-      <h1>Posts</h1>
+      <h1>Posts</h1>{" "}
+      <button onClick={handlePrevious} disabled={page === 1}>
+        Previous
+      </button>
+      <button onClick={handleNext}>Next</button>
       {data?.map((post) => (
         <div>
           {" "}
@@ -41,10 +49,6 @@ const Posts = () => {
           <p>{post.body}</p>
         </div>
       ))}
-      <button onClick={handlePrevious} disabled={page === 1}>
-        Previous
-      </button>
-      <button onClick={handleNext}>Next</button>
     </div>
   );
 };

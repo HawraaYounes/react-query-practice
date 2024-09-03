@@ -4,7 +4,7 @@ import axios from "axios";
 
 const fetchUser = async ({ queryKey }) => {
   const [_, { userId }] = queryKey;
-  const response = await axios(`https://reqres.in/api/users/${userId}`);
+  const response = await axios(`https://reqqres.in/api/users/${userId}`);
   return response.data;
 };
 
@@ -18,6 +18,8 @@ const User = () => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
+    retry: 2,
+    retryDelay: 3000,
   });
 
   if (isLoading) {

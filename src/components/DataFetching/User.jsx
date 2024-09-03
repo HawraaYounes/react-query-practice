@@ -9,13 +9,13 @@ const fetchUser = async ({ queryKey }) => {
 };
 
 const User = () => {
-  const userId = 2;
+  const userId = 6;
   const { isLoading, isError, error, data } = useQuery({
     queryKey: ["users", { userId }],
     queryFn: fetchUser,
     staleTime: 5000,
+    cacheTime: 5000,
   });
-  console.log(isLoading, isError, error, data);
 
   if (isLoading) {
     return <h1> Loading ...</h1>;
